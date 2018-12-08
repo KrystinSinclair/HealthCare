@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!--google API connection-->
+	<title>Health & Wellness</title>
+	<link rel="stylesheet" type="text/css" href="CSS.css" />
+	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+	<script type="text/javascript">
+		google.charts.load('current', {'packages':['corechart']});
+		google.charts.setOnLoadCallback(getAllSheets);
+		//create function to reach google sheet columns
+		function getAllSheets() { 
+			
+			
+			
+			findtheTable('Population',
+						 'SELECT B,S',
+						 histogram);
+		
+			findtheTable('Pivot Table 1',
+			              'SELECT M,O,Q',
+						  popneg);
+			findtheTable('Pivot Table 1',
+			              'SELECT M,O,N',
+						  prevneg);
+			findtheTable('Pivot Table 1',
+			              'SELECT M,O,P',
+						  badneg);
+			findtheTable('Pivot Table 1',
+			              'SELECT M,N,P,O,Q',
+						  bubble);
+						  
+						  
+			
+			
+			
+			
+			
+		} //getAllSheets()
+		//function to get to google sheets
+		function findtheTable(sheetName, query, responseHandler) {
+			
+			var queryString = encodeURIComponent(query);
+			var query = new google.visualization.Query(
+				'https://docs.google.com/spreadsheets/d/13l8bu506hVsVLyM0xKPc70bRo8LEjyxbIItVWGxOxXo/gviz/tq?sheet='
+				+ sheetName + '&headers=1&tq=' + queryString);
+			query.send(responseHandler);
+		} //findtheTable
+	
+		
+		
+		
+		//functions that get response handler for the different charts
+		
+
+		
+		
+		function popneg(response) {
+			
+			var data = response.getDataTable();
+					
+			var options = {
+				height: 400,
+				width: 900,
+				hAxis: {title: 'Negative HealthOutcome'},
+				vAxis: {logscale: true, title:'Population'},
+				title:'Negative Health Outcome and Population'
+				
+			};
+				
+			var chart = new google.visualization.BubbleChart(
+						document.getElementById('popneg'));
+						
+			chart.draw(data, options);
+			
+			
+		} //popneg
+		
+		function prevneg(response) {
+			
+			var data = response.getDataTable();
+					
+			var options = {
+				height: 400,
+				width: 900,
+				hAxis: {title: 'Negative HealthOutcome'},
+				vAxis: {title:'Prevention'},
+				title:'Negative Health Outcome and Prevention'
+				
+			};
+				
+			var chart = new google.visualization.BubbleChart(
+						document.getElementById('prevneg'));
+						
+			chart.draw(data, options);
+			
+		} //prevneg
+		
+		function badneg(response) {
+			
+			var data = response.getDataTable();
+					
+			var options = {
+				height: 400,
+				width: 900,
+				hAxis: {title: ' Negative HealthOutcome'},
+				vAxis: {title:'Unhealthy Behaviors'},
+				title:'Negative Health Outcome'
+				
+			};
+				
+			var chart = new google.visualization.BubbleChart(
+						document.getElementById('badneg'));
+						
+			chart.draw(data, options);
+			
+		} //badneg
+		
+		function bubble(response) {
+			
+			var data = response.getDataTable();
+					
+			var options = {
+				height: 400,
+				width: 900,
+				hAxis: {title: 'Prevention'},
+				vAxis: {title:'Unhealthy Behaviors'},
+				title:'Negative Health Outcome'
+				
+				
+			};
+				
+			var chart = new google.visualization.BubbleChart(
+						document.getElementById('bubble'));
+						
+			chart.draw(data, options);
+			
+		} //bubble
+		
+		function histogram(response) {
+			
+			var data = response.getDataTable();
+					
+			var options = {
+				height: 400,
+				width: 900,
+				legend: {position: 'none'},
+				title:'% City population with Negative Health Outcome',
+				colors: ['green']
+				
+			};
+				
+			var chart = new google.visualization.Histogram(
+						document.getElementById('histogram'));
+						
+			chart.draw(data, options);
+			
+		} //histogram
+		
+				
+				
+				
+	
+				
+				
+			
+		
+	</script>
+	</head>
+<body>
+<div id="menu">
+				<!--this is where we can click to go to the other pages-->
+					<a href="Homepage.html">Homepage</a>
+					<a href="CitySize.html">City Size</a>
+					<a href="LocationalTrends.html">Locational Trends</a>
+					<a class= "active" href="Health&Wellness.html">Health & Wellness</a>
+				</div><!--menu-->
+<div id="content">
+				<!-- Write title  -->
+				
+				<h2>500 Cities CDC Health Care Survey Data</h2>
+				<a href="https://nccd.cdc.gov/500_Cities/rdPage.aspx?rdReport=DPH_500_Cities.ComparisonReport">CDC Link</a><br/>
+				<a href="https://www.kaggle.com/cdc/500-cities">Kaggle Link</a>
+				
+			</div><!-- content -->
+	
+	
+	<br />
+	<!--View Charts-->
+	
+	 
+
+	
+	<h3>Histogram of Helath Outcome for 500 cities</h3>
+	<h5>Fig 10. This is a histogram of the percent of responses to have had negative health outcome by city. </br>
+				Interestingly, it does seem to follow the pattern of a normal distribution. The bucket that the most cities fall into is 13. Therefore 13% of the population has negative health outcomes. 
+	</h5>
+	<div id="histogram" class="charts"
+		style="width: 900px; height: 500px"></div>
+
+	
+	
+		
+	<h3> Let's See how they all fit together</h3>
+	<h5>Fig 11. This is a bubble chart to demonstrate the relationship between the categories and location. <br/>
+				The X Axis represents the percent of the population that takes preventative action to maintain health and wellness. <br/>
+			    The Y Axis represents the percent of the population that engages in Unhealthy Behaviors. <br/>
+			    The Color of the bubble represent the percent of the population that has negative health outcomes. The color goes form white to green.<br/>
+			    The more green the bubble is the more negative health the population of that city has. <br/>
+			    The size of the bubble represents the population of the city. <br/>
+			    There does seem to be a relationship between the three categoreis of health and wellness. <br/>
+			    The more preventative actions and less unhealhty behavior, the less negative health outcomes the city has. <br/>
+			    There is no obvious relationship between the survey responses and population. <br/>
+	
+	</h5>
+	<div id="bubble"class="charts"
+		 style="width: 900px; height: 500px;"></div>
+	
+	<br/>
+	
+	<h3>Select a Radio Button to view how each of the features correlates to Negative Health Outcomes</h3>
+	<input id="tabPop" type="radio" name="tabs"><label for="tabPop">Population</label>
+	
+	<input id="tabprev" type="radio" name="tabs"><label for="tabprev">Prevention</label>
+	
+	<input id="tabunhealth" type="radio" name="tabs"><label for="tabunhealth">Unhealthy Behavior</label>
+	
+
+	
+	<!--<h3> Relationship between Population of the city and negative health outcomes</h3>-->
+	<div id="popneg"class="charts"
+		 style="width: 900px; height: 500px;"></div>
+	
+	
+
+	<!--<h3> Relationship between Prevention of the city and negative health outcomes</h3>-->
+	<div id="prevneg"class="charts"
+		 style="width: 900px; height: 500px;"></div>
+	
+	
+		 
+	
+	<!--<h3> Relationship between Unhealthy Behaviors of the city and negative health outcomes</h3>-->
+	<div id="badneg"class="charts"
+		 style="width: 900px; height: 500px;"></div>
+	
+	<br/>
+	
+	
+</body>
+<footer><div id="menubar">
+				<!--this is where we can click to go to the other pages-->
+				<a href="Homepage.html">Homepage</a>
+				<a href="CitySize.html">City Size</a>
+				<a href="LocationalTrends.html">Locational Trends</a>
+				<a class= "active" href="Health&Wellness.html">Health & Wellness</a>
+				</div><!--menubar--></footer>
+
+</html>

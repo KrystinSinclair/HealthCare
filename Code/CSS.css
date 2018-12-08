@@ -1,0 +1,158 @@
+/*style sheet*/
+html {
+	height: 100%;
+	margin-left: auto;
+	margin-right: auto;
+	position: center;
+	text-align: center;
+	float: center;
+}
+/*choose sans-serif font and center everything*/
+body{
+	font:  normal 1em sans-serif;
+	text-align: center;
+	position: center;
+	margin-right: auto;
+	margin-left: auto;
+	font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+	
+}
+/*put in a background color for the menu bar and put menu bar at top of page and also at the bottom for footer*/
+#menu {
+	background-color: #B0E0E6;
+	position: absolute;
+	left: 0;
+	top: 0;
+	right: 0;
+	font-family: Impact, Charcoal, sans-serif;
+		
+}
+#menubar {
+	background-color: #B0E0E6;
+	position: fixed;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	font-family: Impact, Charcoal, sans-serif;
+		
+}
+/*make menu bar uppercase and control size and text*/
+
+#menu a, #menubar a {
+	letter-spacing: 0em;
+	font: normal 100%, sans-serif;
+	text-transform: uppercase;
+	display: block;
+	float: left;
+	height: 20px;
+	text-align: center;
+	color: #000000;
+	border: 0;
+	list-style: none;
+	padding: 14px 16px;
+	text-decoration: none;
+	font-size: 17 px;
+	overflow: hidden;
+	margin-left: auto;
+	margin-right: auto;
+	
+}
+
+
+/*create a hover effect*/
+
+#menu a:hover, #menubar a:hover{
+	color: #FFFFFF !important;
+	text-decoration: underline;
+	font-style: italic;
+	text-align: center;
+}
+/*create an active effect*/
+#menu a:target, #menubar a:target{
+	color: #191970;
+	background-color: #FFFFFF;
+		
+}
+
+.active {
+color: #4682B4 !important;
+background-color: #FFE4E1;
+}
+
+/*centering paragraph and change color*/
+#content {
+	text-align: center;
+	width: 600 px;
+	padding: 20px 15px 20px 15px;
+	position: center;
+	color: #4B0082;
+	margin-left: auto;
+	margin-right: auto;
+	border-style: none none double none;
+	margin-top: 48px;
+	background-color: #DCDCDC;
+	font-family: "Times New Roman", Times, serif;
+}
+
+#overview{
+	text-align: center;
+	margin-left: 10%;
+	margin-right: 10%;
+	
+}
+
+/*center all sized headers*/
+h1,h2,h3,h4,h5,h6 {
+	text-align: center;
+	
+}
+
+}
+/*center the paragraph*/
+p {
+	text-align: center;
+	
+}
+/*change color and text align left the list*/
+#content p{
+	text-align: left;
+	color:#000000;
+
+	
+
+}
+/*center the charts*/
+ .charts{
+	 margin-left: auto;
+	 margin-right:auto;
+ }
+ 
+ /*tabs for radio button for locational trends*/
+  #popneg, #prevneg, #badneg{
+	 max-height:0;
+	 max-width: 0;
+	 visibility: hidden;
+	 transition: .5s ease all;
+ }
+ 
+ #tabPop:checked ~ #popneg,  #tabprev:checked ~ #prevneg, #tabunhealth:checked ~ #badneg{
+	max-height: 400px;
+	max-width: 900px;
+	visibility: visible;
+	
+ }
+ 
+  /*tabs for radio button for city size*/
+  #unhealthpop, #prevpop, #outcomepop{
+	 max-height:0;
+	 max-width: 0;
+	 visibility: hidden;
+	 transition: .5s ease all;
+ }
+ 
+ #tabunhealthpop:checked ~ #unhealthpop,  #tabprevpop:checked ~ #prevpop, #taboutcomepop:checked ~ #outcomepop{
+	max-height: 400px;
+	max-width: 900px;
+	visibility: visible;
+	
+ }

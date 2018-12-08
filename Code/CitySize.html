@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!--google API connection-->
+	<title>City Size</title>
+	<link rel="stylesheet" type="text/css" href="CSS.css" />
+	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+	<script type="text/javascript">
+		google.charts.load('current', {'packages':['corechart']});
+		google.charts.setOnLoadCallback(getAllSheets);
+		
+		//create function to reach google sheet columns
+		function getAllSheets() { 
+			
+			
+			
+						  
+			
+			findtheTable('BigvsSmall',
+			              'SELECT A,B, C, D, E,F,G,H,I,J,K',
+						  prev)
+			
+			
+			findtheTable('BigvsSmall',
+			              'SELECT M, N,O,P,Q,R',
+						  unhealthy)
+		
+			findtheTable('BigVsSmall',
+			              'SELECT T, U,V,W,X,Y,Z,AA,AB,AC,AD,AE,AF,AG',
+						  outcome)
+			
+			findtheTable('Population',
+			              'SELECT B,C,H',
+						  prevpop)
+			findtheTable('Population',
+			              'SELECT B,C,AG',
+						  unhealthpop)
+			findtheTable('Population',
+			              'SELECT B,C,S',
+						  outcomepop)
+			findtheTable('Population',
+			              'SELECT B,H,AG,S,C',
+						  allpop)
+			
+						  
+						  
+			
+			
+			
+			
+		} //getAllSheets()
+		//function to get to google sheets
+		function findtheTable(sheetName, query, responseHandler) {
+			
+			var queryString = encodeURIComponent(query);
+			var query = new google.visualization.Query(
+				'https://docs.google.com/spreadsheets/d/13l8bu506hVsVLyM0xKPc70bRo8LEjyxbIItVWGxOxXo/gviz/tq?sheet='
+				+ sheetName + '&headers=1&tq=' + queryString);
+			query.send(responseHandler);
+		} //findtheTable
+	
+	//create a table
+	 google.charts.load('current', {'packages':['table']});
+      google.charts.setOnLoadCallback(drawTable);
+
+      function drawTable() {
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'City Size');
+        data.addColumn('number', 'Preventative');
+        data.addColumn('number', 'Unhealthy Behavior');
+		data.addColumn('number', 'Negative Health Outcomes');
+        data.addRows([
+          ['Big',  {v: 62.58, f: '62.58%'}, {v: 24.98, f: '24.98%'}, {v: 13.24, f: '13.24%'}],
+          ['Small',   {v:62.88,   f: '62.88%'}, {v: 24.38, f: '24.38%'}, {v: 12.89, f: '12.89%'}]
+        
+        ]);
+
+        var table = new google.visualization.Table(document.getElementById('CitySizeBigorsmall'));
+
+        table.draw(data, {width: '60%', height: '50%'});
+      
+			
+		} //CitySizeBigorsmall
+		
+		
+		
+		//functions that get response handler for the different charts
+		
+
+	
+		
+		
+		
+		function prev(response) {
+			
+			var data = response.getDataTable();
+					
+			var options = {
+				height: 400,
+				width: 900,
+				hAxis: {title: 'Preventative Measures'},
+				vAxis: {title:'% Population that take preventative actions'},
+				title:'Prevention Measures by City Size'
+				
+			};
+				
+			var chart = new google.visualization.ColumnChart(
+						document.getElementById('prev'));
+						
+			chart.draw(data, options);
+			
+		} //prev
+		
+		
+				
+		function unhealthy(response) {
+			
+			var data = response.getDataTable();
+					
+			var options = {
+				height: 400,
+				width: 900,
+				hAxis: {title: 'Unhealthy Behaviors'},
+				vAxis: {title:'% Population that engages in Unhealthy Behaviors'},
+				title:'Unhealthy Behavior by City Size'
+				
+			};
+				
+			var chart = new google.visualization.ColumnChart(
+						document.getElementById('unhealthy'));
+						
+			chart.draw(data, options);
+			
+		} //unhealthy
+		
+				
+		function outcome(response) {
+			
+			var data = response.getDataTable();
+					
+			var options = {
+				height: 700,
+				width: 900,
+				hAxis: {title: 'Negative Health Outcome'},
+				vAxis: {title:'% Population that has negative health effects'},
+				title:'Negative Health and Wellnes by City Size'
+				
+			};
+				
+			var chart = new google.visualization.ColumnChart(
+						document.getElementById('outcome'));
+						
+			chart.draw(data, options);
+			
+		} //outcome
+		
+		function allpop(response) {
+			
+			var data = response.getDataTable();
+					
+			var options = {
+				height: 400,
+				width: 900,
+				hAxis: {title: 'Prevention'},
+				vAxis: {title:'Unhealthy Behavior'},
+				title:'Health Outcome'
+				
+			};
+				
+			var chart = new google.visualization.BubbleChart(
+						document.getElementById('allpop'));
+						
+			chart.draw(data, options);
+			
+		} //allpop
+		
+		function prevpop(response) {
+			
+			var data = response.getDataTable();
+					
+			var options = {
+				height: 400,
+				width: 900,
+				hAxis: {logscale: true , title: 'Population'},
+				vAxis: {title:'Prevention'},
+				title:'Prevention and Population'
+				
+			};
+				
+			var chart = new google.visualization.BubbleChart(
+						document.getElementById('prevpop'));
+						
+			chart.draw(data, options);
+			
+		} //prevpop
+		
+		function unhealthpop(response) {
+			
+			var data = response.getDataTable();
+					
+			var options = {
+				height: 400,
+				width: 900,
+				hAxis: {logscale: true , title: 'Population'},
+				vAxis: {title:'Unhealthy Behaviors'},
+				title:'Unhealthy Behaviors and Population'
+				
+			};
+				
+			var chart = new google.visualization.BubbleChart(
+						document.getElementById('unhealthpop'));
+						
+			chart.draw(data, options);
+			
+		} //unhealthpop
+		
+		function outcomepop(response) {
+			
+			var data = response.getDataTable();
+					
+			var options = {
+				height: 400,
+				width: 900,
+				hAxis: {logscale: true , title: 'Population'},
+				vAxis: {title:'Negative Health Outcomes'},
+				title:'Negative Health Outcomes and Population'
+				
+			};
+				
+			var chart = new google.visualization.BubbleChart(
+						document.getElementById('outcomepop'));
+						
+			chart.draw(data, options);
+			
+		} //outcomepop
+		
+		
+		
+				
+				
+				
+		
+	</script>
+	</head>
+<body>
+<div id="menu">
+				<!--this is where we can click to go to the other pages-->
+					<a href="Homepage.html">Homepage</a>
+					<a class="active" href="CitySize.html">City Size</a>
+					<a href="LocationalTrends.html">Locational Trends</a>
+					<a href="Health&Wellness.html">Health & Wellness</a>
+				</div><!--menu-->
+<div id="content">
+				<!-- Write title  -->
+				<h2>500 Cities CDC Health Care Survey Data</h2>
+				<a href="https://nccd.cdc.gov/500_Cities/rdPage.aspx?rdReport=DPH_500_Cities.ComparisonReport">CDC Link</a><br/>
+				<a href="https://www.kaggle.com/cdc/500-cities">Kaggle Link</a>
+				
+			</div><!-- content -->
+	
+	
+	<br />
+	<!--View Charts-->
+	
+	
+	
+	
+	
+	
+		 
+	<h3>Big Versus Small Cities</h3>
+	<h5>Table 1. This table shows the percent of survey responders that answered yes to the questions from the three categories.<br/>
+				 There is very little difference between the big cities and the small cities. 
+	</h5>
+	<div id="CitySizeBigorsmall"class="charts"
+		 style="width: 900px; height: 500px;"></div>
+		 
+	<h3>Prevention by City Size</h3>
+	<h5>Fig. 1 This column chart shows the percent of survey responders that answered yes to the questions regarding preventation action to maintian health and wellness.<br/>
+			   This shows how minimal the difference is between big and small cities. 
+	</h5>
+	<div id="prev"class="charts"
+		 style="width: 900px; height: 500px;"></div>
+	<br/>
+
+	<h3>Unhealthy Behavior By City Size</h3>
+	<h5>Fig 2. This column chart shows the percent of survey responders that answered yes to the questions regarding Unhealhty Behaviors. <br/>
+			   The unhealthy behavior that more people engage in the any other is not getting enough hours of sleep a night. <br/>
+			   The unhealthy behavior that the least amount of people engage in is Binge Drinking. <br/>
+			   Overall the size of the city did not show an impact on how many people engage in unhealty behaviors.<br/> 
+	</h5>
+	<div id="unhealthy"class="charts"
+		 style="width: 900px; height: 500px;"></div>
+		 <br/>
+	
+	<h3>Negative Health Outcomes by City Size</h3>
+	<h5>Fig 3. This column chart shows the percent of survey responders that answered yes to the questions regarding Negative Health Outcomes. <br/>
+			   Luckily, it seems that the majority of the population is not affected with many terrible health and wellness. <br/>
+			   Overall the size of the city does not seem to be strongly related to health and wellness of the population. <br/>
+	
+	</h5>
+	<div id="outcome"class="charts"
+		 style="width: 900px; height: 800px;"></div>
+		 
+	<br/>
+	<h3>Let's view how these features intereact</h3>
+	<h5>Fig 4. This bubble charts shows the realtionship between the different categories. <br/>
+			   The X Axis represents the percent of the population that takes preventative action to maintain health and wellness. <br/>
+			   The Y Axis represents the percent of the population that engages in Unhealthy Behaviors. <br/>
+			   The Color of the bubble represent the percent of the population that has negative health outcomes. The color goes form white to green.<br/>
+			   The more green the bubble is the more negative health the population of that city has. <br/>
+			   The size of the bubble represents the population of the city. <br/>
+			   There does seem to be a relationship between the three categoreis of health and wellness. <br/>
+			   The more preventative actions and less unhealhty behavior, the less negative health outcomes the city has. <br/>
+			   There is no obvious relationship between the survey responses and population. <br/>
+	</h5>
+	<div id="allpop"class="charts"
+		 style="width: 900px; height: 500px;"></div>
+		 <br/>
+	<h3>Select the Radio Button for the view the features relationship with population</h3>
+	<br/>
+	<input id="tabprevpop" type="radio" name="tabs"><label for="tabprevpop">Prevention</label>
+	
+	<input id="tabunhealthpop" type="radio" name="tabs"><label for="tabpunhealthpop">Unhealthy Behavior</label>
+	
+	<input id="taboutcomepop" type="radio" name="tabs"><label for="taboutcomepop">Negative Health Outcomes</label>
+	<br/>
+	
+	<div id="prevpop"class="charts"
+		 style="width: 900px; height: 500px;"></div>
+		 
+	<div id="unhealthpop"class="charts"
+		 style="width: 900px; height: 500px;"></div>
+		 
+	<div id="outcomepop"class="charts"
+		 style="width: 900px; height: 500px;"></div>
+	
+	
+	
+	
+		 
+	
+	
+</body>
+<footer><div id="menubar">
+				<!--this is where we can click to go to the other pages-->
+					<a href="Homepage.html">Homepage</a>
+					<a class="active" href="CitySize.html">City Size</a>
+					<a href="LocationalTrends.html">Locational Trends</a>
+					<a href="Health&Wellness.html">Health & Wellness</a>
+				</div><!--menubar--></footer>
+
+</html>
